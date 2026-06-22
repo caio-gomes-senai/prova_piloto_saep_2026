@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import com.atividadekarize.demo.model.Movimentacao;
@@ -15,7 +16,8 @@ import com.atividadekarize.demo.model.Produto;
 import com.atividadekarize.demo.model.Usuario;
 
 @Repository
-public class RepositorioMemoria {
+@Profile("!mysql")
+public class RepositorioMemoria implements RepositorioAlmoxarifado {
     private final Map<Long, Produto> produtos = new ConcurrentHashMap<>();
     private final Map<Long, Usuario> usuarios = new ConcurrentHashMap<>();
     private final List<Movimentacao> movimentacoes = new ArrayList<>();
