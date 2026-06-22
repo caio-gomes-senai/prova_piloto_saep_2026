@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.atividadekarize.demo.model.Movimentacao;
 import com.atividadekarize.demo.model.Produto;
 import com.atividadekarize.demo.model.Usuario;
-import com.atividadekarize.demo.repository.RepositorioMemoria;
+import com.atividadekarize.demo.repository.RepositorioAlmoxarifado;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,9 +24,9 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/api")
 public class ControladorApi {
 
-    private final RepositorioMemoria repositorio;
+    private final RepositorioAlmoxarifado repositorio;
 
-    public ControladorApi(RepositorioMemoria repositorio) {
+    public ControladorApi(RepositorioAlmoxarifado repositorio) {
         this.repositorio = repositorio;
         this.repositorio.initDadosIniciais();
     }
