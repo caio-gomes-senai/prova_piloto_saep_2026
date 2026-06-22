@@ -2,8 +2,9 @@
 
 **Aluno:** Caio Thiago da Mata Gomes  
 **Usuário GitHub:** [caio-gomes-senai](https://github.com/caio-gomes-senai)  
-**Branch:** `Caio-Thiago-da-Mata-Gomes`  
-**Repositório base:** [karizeviecelli/prova_piloto_saep_2026](https://github.com/karizeviecelli/prova_piloto_saep_2026)
+**Branch pessoal:** `Caio-Thiago-da-Mata-Gomes`  
+**Repositório da entrega:** [caio-gomes-senai/prova_piloto_saep_2026](https://github.com/caio-gomes-senai/prova_piloto_saep_2026) (seu fork)  
+**Repositório original:** [karizeviecelli/prova_piloto_saep_2026](https://github.com/karizeviecelli/prova_piloto_saep_2026)
 
 ---
 
