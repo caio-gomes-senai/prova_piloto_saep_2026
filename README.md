@@ -87,3 +87,11 @@ Adicione aqui capturas de tela demonstrando o funcionamento:
 ---
 
 **Última atualização:** 22/06/2026
+
+---
+
+**🧪 Teste de push**
+
+Este commit foi feito apenas para testar o push na branch `Caio-Thiago-da-Mata-Gomes`.
+
+Funcionando! ✅
