@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GAIOS – Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ── TELA DE LOGIN ─────────────────────────────────────────────── -->
+  <section id="login-section">
+    <div class="login-box">
+      <p class="login-sub">Sistema de Estoque</p>
+      <form id="login-form">
+        <label>Usuário <input id="input-username" required></label>
+        <label>Tipo de usuário
+          <select id="select-role">
+            <option value="operador">Operador</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </label>
+        <div class="row">
+          <button type="submit">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── TELA DO SISTEMA ───────────────────────────────────────────── -->
+  <div id="app-section" class="hidden">
+
+    <!-- Navbar -->
+    <nav class="app-navbar">
+      <span class="app-logo">GAIOS</span>
+      <div class="app-user">
+        <span id="user-info"></span>
+        <div class="avatar" id="user-avatar">?</div>
+        <button id="btn-logout">Sair</button>
+      </div>
+    </nav>
+
+    <div class="app-layout">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <a class="nav-item active" data-tab="tab-produtos" href="#">Produtos</a>
+        <a class="nav-item" data-tab="tab-saida" href="#">Registrar Saída</a>
+        <a class="nav-item" data-tab="tab-movimentacoes" href="#">Movimentações</a>
+      </aside>
+
+      <!-- Conteúdo -->
+      <main class="content-area">
+
+        <!-- Produtos -->
+        <div id="tab-produtos" class="tab-panel">
+          <h2 class="page-title">Produtos</h2>
+          <table id="products-table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Saldo</th>
+                <th class="th-actions hidden"></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot id="tfoot-admin" class="hidden">
+              <tr>
+                <td colspan="3" class="td-add">
+                  <button type="button" id="btn-new-product">+ Novo Produto</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- Registrar Saída -->
+        <div id="tab-saida" class="tab-panel hidden">
+          <h2 class="page-title">Registrar Saída</h2>
+          <div id="withdraw-form" class="card">
+            <form id="form-withdraw">
+              <label>Produto <select id="select-product"></select></label>
+              <label>Quantidade <input id="input-qty" type="number" min="1" required></label>
+              <div class="row"><button type="submit">Registrar Saída</button></div>
+              <p id="withdraw-message" class="message"></p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Movimentações -->
+        <div id="tab-movimentacoes" class="tab-panel hidden">
+          <h2 class="page-title">Movimentações</h2>
+          <div id="movements" class="card card-wide">
+            <ul id="movements-list"></ul>
+          </div>
+        </div>
+
+
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

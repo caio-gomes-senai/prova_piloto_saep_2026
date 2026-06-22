@@ -1,0 +1,378 @@
+/* ─── Reset ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #1E293B;
+  background: #F0F4F8;
+}
+
+.hidden { display: none !important; }
+
+/* ─── LOGIN ─────────────────────────────────────────────────────── */
+#login-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F0F4F8;
+}
+
+.login-box {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1D4ED8;
+  letter-spacing: 3px;
+  margin-bottom: 2px;
+}
+
+.login-logo-img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.login-sub {
+  font-size: 0.88rem;
+  color: #94A3B8;
+  margin-bottom: 28px;
+}
+
+/* ─── APP NAVBAR ─────────────────────────────────────────────────── */
+.app-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 28px;
+  background: #fff;
+  border-bottom: 1px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.app-logo {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1D4ED8;
+  letter-spacing: 2px;
+}
+
+.app-logo-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.app-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#user-info {
+  font-size: 0.85rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #1D4ED8;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+#btn-logout {
+  padding: 6px 14px;
+  background: #fff;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+  border-radius: 7px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+#btn-logout:hover {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-color: #FECACA;
+}
+
+/* ─── APP LAYOUT ─────────────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  min-height: calc(100vh - 56px);
+}
+
+/* ─── SIDEBAR ────────────────────────────────────────────────────── */
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid #E2E8F0;
+  padding: 16px 10px;
+}
+
+.nav-item {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #64748B;
+  text-decoration: none;
+  margin-bottom: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-item:hover { background: #EFF6FF; color: #1D4ED8; }
+
+.nav-item.active {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  font-weight: 600;
+}
+
+/* ─── CONTENT AREA ───────────────────────────────────────────────── */
+.content-area {
+  flex: 1;
+  padding: 28px 32px;
+  overflow-y: auto;
+}
+
+.page-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 20px;
+}
+
+/* ─── CARDS ──────────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 24px;
+  max-width: 520px;
+}
+
+.card-wide { max-width: 100%; }
+
+/* ─── TABLE ──────────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+thead { background: #1D4ED8; color: #fff; }
+
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+td {
+  padding: 11px 16px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #F8FAFC; }
+
+/* ─── FORMS ──────────────────────────────────────────────────────── */
+label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+input[type="text"],
+input[type="number"],
+input:not([type]),
+select {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  padding: 9px 12px;
+  border: 1px solid #CBD5E1;
+  border-radius: 7px;
+  font-size: 0.92rem;
+  color: #1E293B;
+  background: #F8FAFC;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.14);
+  background: #fff;
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────────────── */
+button[type="submit"] {
+  padding: 9px 22px;
+  background: #1D4ED8;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover  { background: #1E40AF; }
+button[type="submit"]:active { transform: scale(0.97); }
+
+.row { display: flex; gap: 10px; margin-top: 14px; }
+
+/* ─── MESSAGES ───────────────────────────────────────────────────── */
+.message {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #DC2626;
+  min-height: 18px;
+}
+
+/* ─── TABLE CRUD ─────────────────────────────────────────────────── */
+.th-actions { width: 140px; }
+
+.td-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.btn-edit, .btn-delete, .btn-save, .btn-cancel {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: opacity 0.15s;
+}
+
+.btn-edit {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border-color: #BFDBFE;
+}
+.btn-edit:hover { background: #DBEAFE; }
+
+.btn-delete {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-color: #FECACA;
+}
+.btn-delete:hover { background: #FEE2E2; }
+
+.btn-save {
+  background: #1D4ED8;
+  color: #fff;
+}
+.btn-save:hover { background: #1E40AF; }
+
+.btn-cancel {
+  background: #F1F5F9;
+  color: #64748B;
+  border-color: #E2E8F0;
+}
+.btn-cancel:hover { background: #E2E8F0; }
+
+.inline-input {
+  padding: 5px 8px !important;
+  font-size: 0.88rem !important;
+  margin-top: 0 !important;
+}
+
+.inline-qty { width: 80px !important; }
+
+.td-add {
+  padding: 10px 16px !important;
+  border-top: 1px dashed #E2E8F0;
+}
+
+#btn-new-product {
+  background: none;
+  border: none;
+  color: #1D4ED8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 0;
+}
+#btn-new-product:hover { text-decoration: underline; }
+
+/* ─── ADMIN DIVIDER ──────────────────────────────────────────────── */
+.admin-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 16px;
+  color: #94A3B8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.admin-divider::before,
+.admin-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #E2E8F0;
+}
+
+/* ─── MOVEMENTS ──────────────────────────────────────────────────── */
+#movements-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#movements-list li {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.5;
+}
