@@ -40,22 +40,23 @@ public class RepositorioMysql implements RepositorioAlmoxarifado {
         return new Produto(id, nome, quantidade);
     }
 
-    public Movimentacao adicionarMovimentacao(Long produtoId, int quantidade, String usuario) {
+    public Movimentacao adicionarMovimentacao(Long produtoId, int quantidade, String usuario, String tipo) {
         LocalDateTime agora = LocalDateTime.now();
-        jdbc.update("INSERT INTO movimentacao (produto_id, quantidade, usuario, data_hora) VALUES (?, ?, ?, ?)",
-            produtoId, quantidade, usuario, Timestamp.valueOf(agora));
+        jdbc.update("INSERT INTO movimentacao (produto_id, quantidade, usuario, data_hora, tipo) VALUES (?, ?, ?, ?, ?)",
+            produtoId, quantidade, usuario, Timestamp.valueOf(agora), tipo);
         Long id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
-        return new Movimentacao(id, produtoId, quantidade, usuario, agora);
+        return new Movimentacao(id, produtoId, quantidade, usuario, agora, tipo);
     }
 
     public List<Movimentacao> findAllMovimentacoes() {
-        return jdbc.query("SELECT id, produto_id, quantidade, usuario, data_hora FROM movimentacao ORDER BY id",
+        return jdbc.query("SELECT id, produto_id, quantidade, usuario, data_hora, tipo FROM movimentacao ORDER BY id",
             (rs, row) -> new Movimentacao(
                 rs.getLong("id"),
                 rs.getLong("produto_id"),
                 rs.getInt("quantidade"),
                 rs.getString("usuario"),
-                rs.getTimestamp("data_hora").toLocalDateTime()));
+                rs.getTimestamp("data_hora").toLocalDateTime(),
+                rs.getString("tipo") != null ? rs.getString("tipo") : "SAIDA"));
     }
 
     public boolean atualizarProduto(Long id, String nome, int quantidade) {

@@ -36,9 +36,9 @@ public class RepositorioMemoria implements RepositorioAlmoxarifado {
         return p;
     }
 
-    public Movimentacao adicionarMovimentacao(Long produtoId, int quantidade, String usuario) {
+    public Movimentacao adicionarMovimentacao(Long produtoId, int quantidade, String usuario, String tipo) {
         Long id = movimentacaoIdGen.getAndIncrement();
-        Movimentacao m = new Movimentacao(id, produtoId, quantidade, usuario, LocalDateTime.now());
+        Movimentacao m = new Movimentacao(id, produtoId, quantidade, usuario, LocalDateTime.now(), tipo);
         movimentacoes.add(m);
         return m;
     }

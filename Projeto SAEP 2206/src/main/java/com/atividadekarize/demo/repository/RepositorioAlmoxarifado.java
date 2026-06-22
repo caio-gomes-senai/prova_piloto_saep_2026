@@ -12,7 +12,7 @@ public interface RepositorioAlmoxarifado {
     Collection<Produto> findAllProdutos();
     Produto findProduto(Long id);
     Produto adicionarProduto(String nome, int quantidade);
-    Movimentacao adicionarMovimentacao(Long produtoId, int quantidade, String usuario);
+    Movimentacao adicionarMovimentacao(Long produtoId, int quantidade, String usuario, String tipo);
     List<Movimentacao> findAllMovimentacoes();
     boolean atualizarProduto(Long id, String nome, int quantidade);
     boolean removerProduto(Long id);
