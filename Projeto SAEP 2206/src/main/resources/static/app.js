@@ -90,7 +90,8 @@ async function loadMovements() {
   lista.forEach(m => {
     const li = document.createElement('li');
     const nomeProduto = nomes[m.produtoId] || ('Produto ' + m.produtoId);
-    li.textContent = `${m.dataHora} - ${nomeProduto} - Qtd: ${m.quantidade} - Usuario: ${m.usuario}`;
+    const tipo = m.tipo === 'ENTRADA' ? 'Entrada (admin)' : 'Saida';
+    li.textContent = `${tipo} - ${m.dataHora} - ${nomeProduto} - Qtd: ${m.quantidade} - Usuario: ${m.usuario}`;
     ul.appendChild(li);
   });
 }
