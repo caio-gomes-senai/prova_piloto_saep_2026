@@ -12,12 +12,15 @@ import org.springframework.stereotype.Repository;
 
 import com.atividadekarize.demo.model.Movimentacao;
 import com.atividadekarize.demo.model.Produto;
+import com.atividadekarize.demo.model.Usuario;
 
 @Repository
 public class RepositorioMemoria {
     private final Map<Long, Produto> produtos = new ConcurrentHashMap<>();
+    private final Map<Long, Usuario> usuarios = new ConcurrentHashMap<>();
     private final List<Movimentacao> movimentacoes = new ArrayList<>();
     private final AtomicLong produtoIdGen = new AtomicLong(1);
+    private final AtomicLong usuarioIdGen = new AtomicLong(1);
     private final AtomicLong movimentacaoIdGen = new AtomicLong(1);
 
     public Collection<Produto> findAllProdutos() { return produtos.values(); }
@@ -62,11 +65,46 @@ public class RepositorioMemoria {
         }
     }
 
+    public Collection<Usuario> findAllUsuarios() { return usuarios.values(); }
+
+    public Usuario findUsuario(Long id) { return usuarios.get(id); }
+
+    public Usuario findUsuarioPorMatricula(String matricula) {
+        return usuarios.values().stream()
+            .filter(u -> u.getMatricula().equals(matricula))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public Usuario adicionarUsuario(String matricula, String nome, String tipo) {
+        Long id = usuarioIdGen.getAndIncrement();
+        Usuario u = new Usuario(id, matricula, nome, tipo);
+        usuarios.put(id, u);
+        return u;
+    }
+
+    public boolean atualizarUsuario(Long id, String matricula, String nome, String tipo) {
+        Usuario u = usuarios.get(id);
+        if (u == null) return false;
+        u.setMatricula(matricula);
+        u.setNome(nome);
+        u.setTipo(tipo);
+        return true;
+    }
+
+    public boolean removerUsuario(Long id) {
+        return usuarios.remove(id) != null;
+    }
+
     public void initDadosIniciais() {
         if (produtos.isEmpty()) {
             adicionarProduto("Álcool 70%", 50);
             adicionarProduto("Sabão detergente", 30);
             adicionarProduto("Luvas descartáveis", 100);
+        }
+        if (usuarios.isEmpty()) {
+            adicionarUsuario("1001", "Administrador", "admin");
+            adicionarUsuario("2001", "Operador Teste", "operador");
         }
     }
 }
