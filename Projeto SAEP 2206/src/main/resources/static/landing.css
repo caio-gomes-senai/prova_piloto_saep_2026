@@ -1,0 +1,291 @@
+/* ─── Reset ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #F0F4F8;
+  color: #1E293B;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; }
+
+/* ─── Navbar ────────────────────────────────────────────────────────── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  background: #fff;
+  border-bottom: 1px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1D4ED8;
+  letter-spacing: 2px;
+}
+
+.nav-logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+.nav-btn {
+  padding: 8px 22px;
+  background: #1D4ED8;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover { background: #1E40AF; }
+
+/* ─── Botão primário (reutilizável) ─────────────────────────────────── */
+.btn-primary {
+  display: inline-block;
+  padding: 14px 34px;
+  background: #1D4ED8;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 14px rgba(29,78,216,0.35);
+}
+
+.btn-primary:hover  { background: #1E40AF; transform: translateY(-2px); }
+.btn-primary:active { transform: translateY(0); }
+
+/* ─── Hero ───────────────────────────────────────────────────────────── */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 48px 72px;
+}
+
+.hero-content { flex: 1; }
+
+.hero-tag {
+  display: inline-block;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #0F172A;
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: #475569;
+  max-width: 440px;
+  margin-bottom: 36px;
+}
+
+/* ─── Hero Visual (card estilo dashboard) ───────────────────────────── */
+.hero-visual {
+  flex: 0 0 340px;
+}
+
+.visual-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+}
+
+.vc-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.vc-row:last-of-type { border-bottom: none; }
+
+.vc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.vc-dot.green  { background: #22C55E; }
+.vc-dot.yellow { background: #F59E0B; }
+.vc-dot.blue   { background: #3B82F6; }
+
+.vc-label {
+  flex: 1;
+  font-size: 0.88rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.vc-qty {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1D4ED8;
+}
+
+.vc-divider {
+  height: 1px;
+  background: #E2E8F0;
+  margin: 16px 0 12px;
+}
+
+.vc-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.vc-stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1D4ED8;
+}
+
+.vc-stat-label {
+  font-size: 0.85rem;
+  color: #64748B;
+}
+
+/* ─── Features ───────────────────────────────────────────────────────── */
+.features {
+  background: #fff;
+  padding: 72px 48px;
+}
+
+.features-title {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 48px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 28px 22px;
+  text-align: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.feature-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+}
+
+.feature-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 0.87rem;
+  color: #64748B;
+  line-height: 1.6;
+}
+
+/* ─── CTA Final ─────────────────────────────────────────────────────── */
+.cta {
+  text-align: center;
+  padding: 80px 48px;
+  background: linear-gradient(135deg, #1D4ED8 0%, #1E3A8A 100%);
+  color: #fff;
+}
+
+.cta h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.cta p {
+  font-size: 1rem;
+  color: #BFDBFE;
+  margin-bottom: 32px;
+}
+
+.cta .btn-primary {
+  background: #fff;
+  color: #1D4ED8;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+.cta .btn-primary:hover { background: #EFF6FF; }
+
+/* ─── Footer ────────────────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 24px;
+  background: #0F172A;
+  color: #64748B;
+}
+
+.footer-logo {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #93C5FD;
+  letter-spacing: 2px;
+}
+
+.footer small { font-size: 0.8rem; }
+
+/* ─── Responsivo ─────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero { flex-direction: column; padding: 48px 24px; }
+  .hero-title { font-size: 2.2rem; }
+  .hero-visual { flex: unset; width: 100%; max-width: 360px; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .navbar { padding: 14px 24px; }
+}
+
+@media (max-width: 560px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 1.8rem; }
+}
