@@ -44,9 +44,9 @@ prova_piloto_saep_2026/
 
 ## ▶️ Como Executar
 
-1. Clone o repositório:
+1. Clone o repositório (seu fork):
    ```bash
-   git clone https://github.com/karizeviecelli/prova_piloto_saep_2026.git
+   git clone https://github.com/caio-gomes-senai/prova_piloto_saep_2026.git
    cd prova_piloto_saep_2026
    git checkout Caio-Thiago-da-Mata-Gomes
    ```
