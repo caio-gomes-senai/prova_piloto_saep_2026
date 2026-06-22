@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atividadekarize.demo.model.Movimentacao;
 import com.atividadekarize.demo.model.Produto;
+import com.atividadekarize.demo.model.Usuario;
 import com.atividadekarize.demo.repository.RepositorioMemoria;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,10 +33,13 @@ public class ControladorApi {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequisicao requisicao, HttpSession session) {
-        if (requisicao.usuario == null || requisicao.tipo == null) return ResponseEntity.badRequest().build();
-        session.setAttribute("usuario", requisicao.usuario);
-        session.setAttribute("tipo", requisicao.tipo);
-        return ResponseEntity.ok().build();
+        if (requisicao.matricula == null || requisicao.matricula.isBlank()) return ResponseEntity.badRequest().body("Informe a matrícula");
+        Usuario usuario = repositorio.findUsuarioPorMatricula(requisicao.matricula.trim());
+        if (usuario == null) return ResponseEntity.status(401).body("Matrícula não encontrada");
+        session.setAttribute("usuario", usuario.getNome());
+        session.setAttribute("matricula", usuario.getMatricula());
+        session.setAttribute("tipo", usuario.getTipo());
+        return ResponseEntity.ok(usuario);
     }
 
     @PostMapping("/logout")
@@ -92,7 +96,51 @@ public class ControladorApi {
     @GetMapping("/movimentacoes")
     public List<Movimentacao> listarMovimentacoes() { return repositorio.findAllMovimentacoes(); }
 
-    public static class LoginRequisicao { public String usuario; public String tipo; }
+    @GetMapping("/usuarios")
+    public ResponseEntity<?> listarUsuarios(HttpSession session) {
+        if (!isAdmin(session)) return ResponseEntity.status(403).body("Acesso negado");
+        return ResponseEntity.ok(repositorio.findAllUsuarios());
+    }
+
+    @PostMapping("/usuarios")
+    public ResponseEntity<?> adicionarUsuario(@RequestBody UsuarioRequisicao requisicao, HttpSession session) {
+        if (!isAdmin(session)) return ResponseEntity.status(403).body("Acesso negado");
+        if (requisicao.matricula == null || requisicao.matricula.isBlank()) return ResponseEntity.badRequest().body("Matrícula obrigatória");
+        if (requisicao.nome == null || requisicao.nome.isBlank()) return ResponseEntity.badRequest().body("Nome obrigatório");
+        if (requisicao.tipo == null || (!"admin".equals(requisicao.tipo) && !"operador".equals(requisicao.tipo))) return ResponseEntity.badRequest().body("Tipo inválido");
+        if (repositorio.findUsuarioPorMatricula(requisicao.matricula.trim()) != null) return ResponseEntity.badRequest().body("Matrícula já cadastrada");
+        Usuario usuario = repositorio.adicionarUsuario(requisicao.matricula.trim(), requisicao.nome.trim(), requisicao.tipo);
+        return ResponseEntity.ok(usuario);
+    }
+
+    @PutMapping("/usuarios/{id}")
+    public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioRequisicao requisicao, HttpSession session) {
+        if (!isAdmin(session)) return ResponseEntity.status(403).body("Acesso negado");
+        if (requisicao.matricula == null || requisicao.matricula.isBlank()) return ResponseEntity.badRequest().body("Matrícula obrigatória");
+        if (requisicao.nome == null || requisicao.nome.isBlank()) return ResponseEntity.badRequest().body("Nome obrigatório");
+        if (requisicao.tipo == null || (!"admin".equals(requisicao.tipo) && !"operador".equals(requisicao.tipo))) return ResponseEntity.badRequest().body("Tipo inválido");
+        Usuario existente = repositorio.findUsuarioPorMatricula(requisicao.matricula.trim());
+        if (existente != null && !existente.getId().equals(id)) return ResponseEntity.badRequest().body("Matrícula já cadastrada");
+        boolean ok = repositorio.atualizarUsuario(id, requisicao.matricula.trim(), requisicao.nome.trim(), requisicao.tipo);
+        if (!ok) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/usuarios/{id}")
+    public ResponseEntity<?> removerUsuario(@PathVariable Long id, HttpSession session) {
+        if (!isAdmin(session)) return ResponseEntity.status(403).body("Acesso negado");
+        boolean ok = repositorio.removerUsuario(id);
+        if (!ok) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().build();
+    }
+
+    private boolean isAdmin(HttpSession session) {
+        Object tipo = session.getAttribute("tipo");
+        return tipo != null && "admin".equals(tipo);
+    }
+
+    public static class LoginRequisicao { public String matricula; }
     public static class ProdutoRequisicao { public String nome; public int quantidade; }
     public static class SaidaRequisicao { public Long produtoId; public int quantidade; }
+    public static class UsuarioRequisicao { public String matricula; public String nome; public String tipo; }
 }
