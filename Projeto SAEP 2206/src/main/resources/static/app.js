@@ -3,7 +3,7 @@ let currentRole = '';
 const ESTOQUE_MINIMO = 10;
 
 async function api(path, opts) {
-  const res = await fetch('/api' + path, opts);
+  const res = await fetch('/api' + path, { credentials: 'include', ...opts });
   const text = await res.text();
   try { return { ok: res.ok, data: JSON.parse(text) }; } catch(e) { return { ok: res.ok, data: text }; }
 }
@@ -71,12 +71,26 @@ function mostrarAvisosEstoque(produtos) {
 
 async function loadMovements() {
   const r = await api('/movimentacoes');
-  if (!r.ok) return;
   const ul = $('movements-list');
   ul.innerHTML = '';
-  r.data.forEach(m => {
+  if (!r.ok) {
+    ul.innerHTML = '<li>Nao foi possivel carregar as movimentacoes.</li>';
+    return;
+  }
+  const lista = Array.isArray(r.data) ? r.data : [];
+  if (lista.length === 0) {
+    ul.innerHTML = '<li>Nenhuma movimentacao ainda. Registre uma saida primeiro.</li>';
+    return;
+  }
+  const produtos = await api('/produtos');
+  const nomes = {};
+  if (produtos.ok && Array.isArray(produtos.data)) {
+    produtos.data.forEach(p => { nomes[p.id] = p.nome; });
+  }
+  lista.forEach(m => {
     const li = document.createElement('li');
-    li.textContent = `${m.dataHora} - Produto ${m.produtoId} - Qtd: ${m.quantidade} - Usuário: ${m.usuario}`;
+    const nomeProduto = nomes[m.produtoId] || ('Produto ' + m.produtoId);
+    li.textContent = `${m.dataHora} - ${nomeProduto} - Qtd: ${m.quantidade} - Usuario: ${m.usuario}`;
     ul.appendChild(li);
   });
 }
@@ -169,12 +183,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', e => {
+    item.addEventListener('click', async e => {
       e.preventDefault();
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
       item.classList.add('active');
       $(item.dataset.tab).classList.remove('hidden');
+      if (item.dataset.tab === 'tab-movimentacoes') await loadMovements();
     });
   });
 
