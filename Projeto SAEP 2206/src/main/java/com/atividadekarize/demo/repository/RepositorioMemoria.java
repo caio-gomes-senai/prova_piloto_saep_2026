@@ -101,6 +101,7 @@ public class RepositorioMemoria {
             adicionarProduto("Álcool 70%", 50);
             adicionarProduto("Sabão detergente", 30);
             adicionarProduto("Luvas descartáveis", 100);
+            adicionarProduto("Coca-cola", 2);
         }
         if (usuarios.isEmpty()) {
             adicionarUsuario("1001", "Administrador", "admin");
