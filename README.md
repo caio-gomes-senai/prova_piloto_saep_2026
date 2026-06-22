@@ -15,4 +15,4 @@
 | Nome Completo      | Caio Thiago da Mata Gomes         |
 | GitHub             | caio-gomes-senai                  |
 | Branch Pessoal     | Caio-Thiago-da-Mata-Gomes         |
-| Data de Entrega    | (preencher)                       |
+| Data de Entrega    | 22/06/2026                        |
