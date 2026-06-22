@@ -59,18 +59,58 @@ async function loadMovements() {
   });
 }
 
-function setUserInfo(username, role) {
+function setUserInfo(nome, role) {
   currentRole = role;
-  $('user-info').textContent = username;
-  $('user-avatar').textContent = username.charAt(0).toUpperCase();
+  $('user-info').textContent = nome;
+  $('user-avatar').textContent = nome.charAt(0).toUpperCase();
 
   if (role === 'admin') {
     show(document.querySelector('.th-actions'));
     show($('tfoot-admin'));
+    show($('nav-usuarios'));
   } else {
     hide(document.querySelector('.th-actions'));
     hide($('tfoot-admin'));
+    hide($('nav-usuarios'));
   }
+}
+
+async function loadUsers() {
+  const r = await api('/usuarios');
+  if (!r.ok) return;
+
+  const tbody = document.querySelector('#users-table tbody');
+  tbody.innerHTML = '';
+
+  r.data.forEach(u => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${esc(u.matricula)}</td>
+      <td>${esc(u.nome)}</td>
+      <td>${esc(u.tipo)}</td>
+      <td class="td-actions">
+        <button class="btn-edit-user" data-id="${u.id}" data-matricula="${esc(u.matricula)}" data-nome="${esc(u.nome)}" data-tipo="${esc(u.tipo)}">Editar</button>
+        <button class="btn-delete-user" data-id="${u.id}">Excluir</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function makeEditableUserRow(tr, id, matricula, nome, tipo) {
+  tr.innerHTML = `
+    <td><input class="inline-input" type="text" value="${esc(matricula)}" placeholder="Matrícula"></td>
+    <td><input class="inline-input" type="text" value="${esc(nome)}" placeholder="Nome"></td>
+    <td>
+      <select class="inline-input">
+        <option value="operador" ${tipo === 'operador' ? 'selected' : ''}>Operador</option>
+        <option value="admin" ${tipo === 'admin' ? 'selected' : ''}>Administrador</option>
+      </select>
+    </td>
+    <td class="td-actions">
+      <button class="btn-save-user" data-id="${id || ''}">Salvar</button>
+      <button class="btn-cancel-user">Cancelar</button>
+    </td>`;
+  tr.querySelector('input').focus();
 }
 
 function makeEditableRow(tr, id, nome, qty) {
@@ -88,16 +128,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $('login-form').addEventListener('submit', async e => {
     e.preventDefault();
-    const user = $('input-username').value.trim();
-    const role = $('select-role').value;
-    const r = await api('/login', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify({ usuario: user, tipo: role }) });
+    const matricula = $('input-matricula').value.trim();
+    const r = await api('/login', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify({ matricula }) });
     if (r.ok) {
       hide($('login-section'));
       show($('app-section'));
-      setUserInfo(user, role);
+      setUserInfo(r.data.nome, r.data.tipo);
       await loadProducts();
       await loadMovements();
-    } else alert('Erro ao entrar');
+      if (r.data.tipo === 'admin') await loadUsers();
+    } else alert(r.data || 'Matrícula não encontrada');
   });
 
   $('btn-logout').addEventListener('click', async () => {
@@ -158,6 +198,49 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.appendChild(tr);
     makeEditableRow(tr, null, '', 0);
     tr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  document.querySelector('#users-table tbody').addEventListener('click', async e => {
+    const btn = e.target;
+    if (!btn.matches('button')) return;
+    const tr = btn.closest('tr');
+
+    if (btn.classList.contains('btn-edit-user')) {
+      makeEditableUserRow(tr, btn.dataset.id, btn.dataset.matricula, btn.dataset.nome, btn.dataset.tipo);
+    }
+
+    if (btn.classList.contains('btn-delete-user')) {
+      if (!confirm('Excluir este usuário?')) return;
+      const r = await api('/usuarios/' + btn.dataset.id, { method: 'DELETE' });
+      if (!r.ok) { alert('Erro ao excluir: ' + (r.data || r.status)); return; }
+      await loadUsers();
+    }
+
+    if (btn.classList.contains('btn-save-user')) {
+      const matricula = tr.querySelectorAll('input')[0].value.trim();
+      const nome = tr.querySelectorAll('input')[1].value.trim();
+      const tipo = tr.querySelector('select').value;
+      if (!matricula || !nome) { alert('Preencha matrícula e nome'); return; }
+      const id = btn.dataset.id;
+      const body = JSON.stringify({ matricula, nome, tipo });
+      const headers = { 'content-type': 'application/json' };
+      const r = id
+        ? await api('/usuarios/' + id, { method: 'PUT', headers, body })
+        : await api('/usuarios', { method: 'POST', headers, body });
+      if (!r.ok) { alert('Erro ao salvar: ' + (r.data || r.status)); return; }
+      await loadUsers();
+    }
+
+    if (btn.classList.contains('btn-cancel-user')) {
+      await loadUsers();
+    }
+  });
+
+  $('btn-new-user').addEventListener('click', () => {
+    const tbody = document.querySelector('#users-table tbody');
+    const tr = document.createElement('tr');
+    tbody.appendChild(tr);
+    makeEditableUserRow(tr, null, '', '', 'operador');
   });
 
   $('form-withdraw').addEventListener('submit', async e => {

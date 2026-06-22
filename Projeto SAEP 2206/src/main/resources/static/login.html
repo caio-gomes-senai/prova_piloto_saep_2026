@@ -13,13 +13,7 @@
     <div class="login-box">
       <p class="login-sub">Sistema de Estoque</p>
       <form id="login-form">
-        <label>Usuário <input id="input-username" required></label>
-        <label>Tipo de usuário
-          <select id="select-role">
-            <option value="operador">Operador</option>
-            <option value="admin">Administrador</option>
-          </select>
-        </label>
+        <label>Matrícula <input id="input-matricula" required placeholder="Ex: 1001"></label>
         <div class="row">
           <button type="submit">Entrar</button>
         </div>
@@ -47,6 +41,7 @@
         <a class="nav-item active" data-tab="tab-produtos" href="#">Produtos</a>
         <a class="nav-item" data-tab="tab-saida" href="#">Registrar Saída</a>
         <a class="nav-item" data-tab="tab-movimentacoes" href="#">Movimentações</a>
+        <a class="nav-item hidden" id="nav-usuarios" data-tab="tab-usuarios" href="#">Usuários</a>
       </aside>
 
       <!-- Conteúdo -->
@@ -95,6 +90,28 @@
           </div>
         </div>
 
+        <!-- Usuários (admin) -->
+        <div id="tab-usuarios" class="tab-panel hidden">
+          <h2 class="page-title">Usuários</h2>
+          <table id="users-table">
+            <thead>
+              <tr>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="td-add">
+                  <button type="button" id="btn-new-user">+ Novo Usuário</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
 
       </main>
     </div>
