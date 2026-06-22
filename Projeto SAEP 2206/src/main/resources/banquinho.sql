@@ -16,5 +16,8 @@ CREATE TABLE IF NOT EXISTS movimentacao (
     produto_id BIGINT NOT NULL,
     quantidade INT NOT NULL,
     usuario VARCHAR(100) NOT NULL,
-    data_hora DATETIME NOT NULL
+    data_hora DATETIME NOT NULL,
+    tipo VARCHAR(20) NOT NULL DEFAULT 'SAIDA'
 );
+
+ALTER TABLE movimentacao ADD COLUMN tipo VARCHAR(20) NOT NULL DEFAULT 'SAIDA';

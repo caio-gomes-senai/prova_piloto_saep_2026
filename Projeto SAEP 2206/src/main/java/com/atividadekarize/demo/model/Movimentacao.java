@@ -8,15 +8,17 @@ public class Movimentacao {
     private int quantidade;
     private String usuario;
     private LocalDateTime dataHora;
+    private String tipo;
 
     public Movimentacao() {}
 
-    public Movimentacao(Long id, Long produtoId, int quantidade, String usuario, LocalDateTime dataHora) {
+    public Movimentacao(Long id, Long produtoId, int quantidade, String usuario, LocalDateTime dataHora, String tipo) {
         this.id = id;
         this.produtoId = produtoId;
         this.quantidade = quantidade;
         this.usuario = usuario;
         this.dataHora = dataHora;
+        this.tipo = tipo;
     }
 
     public Long getId() { return id; }
@@ -33,4 +35,7 @@ public class Movimentacao {
 
     public LocalDateTime getDataHora() { return dataHora; }
     public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
+
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 }
