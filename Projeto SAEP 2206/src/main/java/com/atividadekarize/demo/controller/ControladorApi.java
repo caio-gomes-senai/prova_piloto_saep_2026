@@ -58,6 +58,8 @@ public class ControladorApi {
         if (tipo == null || !"admin".equals(tipo)) return ResponseEntity.status(403).body("Acesso negado");
         if (requisicao.nome == null) return ResponseEntity.badRequest().build();
         Produto produto = repositorio.adicionarProduto(requisicao.nome, requisicao.quantidade);
+        Object admin = session.getAttribute("usuario");
+        repositorio.adicionarMovimentacao(produto.getId(), requisicao.quantidade, admin.toString(), "ENTRADA");
         return ResponseEntity.ok(produto);
     }
 
@@ -66,8 +68,15 @@ public class ControladorApi {
         Object tipo = session.getAttribute("tipo");
         if (tipo == null || !"admin".equals(tipo)) return ResponseEntity.status(403).body("Acesso negado");
         if (requisicao.nome == null || requisicao.nome.isBlank()) return ResponseEntity.badRequest().body("Nome obrigatório");
+        Produto antigo = repositorio.findProduto(id);
+        if (antigo == null) return ResponseEntity.notFound().build();
         boolean ok = repositorio.atualizarProduto(id, requisicao.nome, requisicao.quantidade);
         if (!ok) return ResponseEntity.notFound().build();
+        if (requisicao.quantidade > antigo.getQuantidade()) {
+            int adicionado = requisicao.quantidade - antigo.getQuantidade();
+            Object admin = session.getAttribute("usuario");
+            repositorio.adicionarMovimentacao(id, adicionado, admin.toString(), "ENTRADA");
+        }
         return ResponseEntity.ok().build();
     }
 
@@ -93,7 +102,7 @@ public class ControladorApi {
         }
         boolean ok = repositorio.retirar(requisicao.produtoId, requisicao.quantidade);
         if (!ok) return ResponseEntity.status(500).body("Erro ao registrar saída");
-        Movimentacao movimentacao = repositorio.adicionarMovimentacao(requisicao.produtoId, requisicao.quantidade, usuario.toString());
+        Movimentacao movimentacao = repositorio.adicionarMovimentacao(requisicao.produtoId, requisicao.quantidade, usuario.toString(), "SAIDA");
         return ResponseEntity.ok(movimentacao);
     }
 
