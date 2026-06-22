@@ -1,5 +1,6 @@
 const $ = id => document.getElementById(id);
 let currentRole = '';
+const ESTOQUE_MINIMO = 10;
 
 async function api(path, opts) {
   const res = await fetch('/api' + path, opts);
@@ -45,6 +46,27 @@ async function loadProducts() {
     }
     tbody.appendChild(tr);
   });
+
+  if (currentRole === 'admin') {
+    mostrarAvisosEstoque(r.data);
+  } else {
+    hide($('stock-alerts'));
+  }
+}
+
+function mostrarAvisosEstoque(produtos) {
+  const box = $('stock-alerts');
+  const acabando = produtos.filter(p => p.quantidade <= ESTOQUE_MINIMO);
+
+  if (acabando.length === 0) {
+    hide(box);
+    return;
+  }
+
+  box.innerHTML = acabando.map(p =>
+    `<p>${esc(p.nome)} está acabando: ${p.quantidade} unidades restantes. Recomenda abastecer o estoque.</p>`
+  ).join('');
+  show(box);
 }
 
 async function loadMovements() {
