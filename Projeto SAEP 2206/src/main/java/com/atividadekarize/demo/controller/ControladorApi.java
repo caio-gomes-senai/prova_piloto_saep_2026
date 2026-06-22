@@ -3,6 +3,8 @@ package com.atividadekarize.demo.controller;
 import java.util.Collection;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +26,13 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/api")
 public class ControladorApi {
 
+    private static final Logger log = LoggerFactory.getLogger(ControladorApi.class);
     private final RepositorioAlmoxarifado repositorio;
 
     public ControladorApi(RepositorioAlmoxarifado repositorio) {
         this.repositorio = repositorio;
         this.repositorio.initDadosIniciais();
+        log.info("Banco em uso: {}", repositorio.getClass().getSimpleName());
     }
 
     @PostMapping("/login")
