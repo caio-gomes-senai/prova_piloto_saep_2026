@@ -6,13 +6,5 @@
 **Repositório da entrega:** [caio-gomes-senai/prova_piloto_saep_2026](https://github.com/caio-gomes-senai/prova_piloto_saep_2026) (seu fork)  
 **Repositório original:** [karizeviecelli/prova_piloto_saep_2026](https://github.com/karizeviecelli/prova_piloto_saep_2026)
 
----
+Tks :)
 
-## 📋 Identificação do Aluno
-
-| Campo              | Valor                              |
-|--------------------|------------------------------------|
-| Nome Completo      | Caio Thiago da Mata Gomes         |
-| GitHub             | caio-gomes-senai                  |
-| Branch Pessoal     | Caio-Thiago-da-Mata-Gomes         |
-| Data de Entrega    | 22/06/2026                      |
