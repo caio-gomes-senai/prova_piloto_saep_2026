@@ -24,7 +24,15 @@ async function loadProducts() {
   const select = $('select-product');
   select.innerHTML = '';
 
-  r.data.forEach(p => {
+  const lista = Array.isArray(r.data) ? r.data : [];
+
+  if (lista.length === 0) {
+    show($('empty-produtos'));
+  } else {
+    hide($('empty-produtos'));
+  }
+
+  lista.forEach(p => {
     const opt = document.createElement('option');
     opt.value = p.id;
     opt.textContent = p.nome;
@@ -48,7 +56,7 @@ async function loadProducts() {
   });
 
   if (currentRole === 'admin') {
-    mostrarAvisosEstoque(r.data);
+    mostrarAvisosEstoque(lista);
   } else {
     hide($('stock-alerts'));
   }

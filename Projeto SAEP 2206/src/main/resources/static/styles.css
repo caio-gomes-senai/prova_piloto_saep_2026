@@ -186,8 +186,7 @@ table {
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
+  box-shadow: -3px 12px 8px rgba(0, 0, 0, 0.06);}
 
 thead { background: #1D4ED8; color: #fff; }
 
@@ -392,4 +391,11 @@ button[type="submit"]:active { transform: scale(0.97); }
   font-size: 0.85rem;
   color: #475569;
   line-height: 1.5;
+}
+
+.empty-state {
+  padding: 20px;
+  text-align: center;
+  color: #64748B;
+  font-size: 0.9rem;
 }
