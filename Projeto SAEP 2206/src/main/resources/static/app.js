@@ -94,14 +94,20 @@ async function loadMovements() {
   const ul = $('movements-list');
   ul.innerHTML = '';
   if (!r.ok) {
-    ul.innerHTML = '<li>Nao foi possivel carregar as movimentacoes.</li>';
+    show($('empty-movimentacoes'));
+    $('empty-movimentacoes').textContent = 'Nao foi possivel carregar as movimentacoes.';
+    hide($('movements'));
     return;
   }
   const lista = Array.isArray(r.data) ? r.data : [];
   if (lista.length === 0) {
-    ul.innerHTML = '<li>Nenhuma movimentacao ainda. Registre uma saida primeiro.</li>';
+    show($('empty-movimentacoes'));
+    $('empty-movimentacoes').textContent = 'Nenhuma movimentacao registrada ainda.';
+    hide($('movements'));
     return;
   }
+  hide($('empty-movimentacoes'));
+  show($('movements'));
   const produtos = await api('/produtos');
   const nomes = {};
   if (produtos.ok && Array.isArray(produtos.data)) {
