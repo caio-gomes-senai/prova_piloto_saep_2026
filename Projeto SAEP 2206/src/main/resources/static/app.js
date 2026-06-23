@@ -28,8 +28,10 @@ async function loadProducts() {
 
   if (lista.length === 0) {
     show($('empty-produtos'));
+    atualizarEmptySaida(true);
   } else {
     hide($('empty-produtos'));
+    atualizarEmptySaida(false);
   }
 
   lista.forEach(p => {
@@ -59,6 +61,16 @@ async function loadProducts() {
     mostrarAvisosEstoque(lista);
   } else {
     hide($('stock-alerts'));
+  }
+}
+
+function atualizarEmptySaida(semProdutos) {
+  if (semProdutos) {
+    show($('empty-saida'));
+    hide($('withdraw-form'));
+  } else {
+    hide($('empty-saida'));
+    show($('withdraw-form'));
   }
 }
 
